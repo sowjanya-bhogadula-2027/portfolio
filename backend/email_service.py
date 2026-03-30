@@ -4,6 +4,7 @@ from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 from datetime import datetime
 import logging
+import resend
 
 logger = logging.getLogger(__name__)
 
@@ -26,7 +27,10 @@ def send_contact_email(name: str, email: str, message: str) -> bool:
         smtp_user = os.environ.get('SMTP_USER')
         smtp_password = os.environ.get('SMTP_PASSWORD')
         email_from = os.environ.get('EMAIL_FROM')
-        email_to = os.environ.get('EMAIL_TO')
+        # email_to = os.environ.get('EMAIL_TO')
+
+        resend.api_key = os.environ.get('RESEND_API_KEY')
+        email_to = os.environ.get('EMAIL_TO', 'lakshmisowjanya275@gmail.com')
         
         # Create message
         msg = MIMEMultipart('alternative')
@@ -142,19 +146,21 @@ def send_contact_email(name: str, email: str, message: str) -> bool:
         msg.attach(part1)
         msg.attach(part2)
         
-        # Send email
-        logger.info(f"Connecting to SMTP server {smtp_host}:{smtp_port}")
-        with smtplib.SMTP(smtp_host, smtp_port, timeout=30) as server:
-            server.set_debuglevel(1) # This will print detailed SMTP logs to Render
-            server.starttls()
-            server.login(smtp_user, smtp_password)
-            server.send_message(msg)
-            
-        logger.info(f"Contact email sent successfully to {email_to}")
+        # 3. Send using Resend (This uses HTTPS Port 443 - No Firewall Issues)
+        params = {
+            "from": "onboarding@resend.dev", # Use this until you verify a custom domain
+            "to": email_to,
+            "subject": f"New Contact Form Submission from {name}",
+            "reply_to": email,
+            "html": html_body
+        }
+
+        r = resend.Emails.send(params)
+        logger.info(f"Contact email sent successfully via Resend to {email_to}")
         return True
         
     except Exception as e:
-        logger.error(f"Failed to send contact email: {str(e)}")
+        logger.error(f"Resend API Error: {str(e)}")
         return False
 
 
