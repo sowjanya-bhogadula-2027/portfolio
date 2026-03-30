@@ -144,7 +144,8 @@ def send_contact_email(name: str, email: str, message: str) -> bool:
         
         # Send email
         logger.info(f"Connecting to SMTP server {smtp_host}:{smtp_port}")
-        with smtplib.SMTP(smtp_host, smtp_port) as server:
+        with smtplib.SMTP(smtp_host, smtp_port, timeout=30) as server:
+            server.set_debuglevel(1) # This will print detailed SMTP logs to Render
             server.starttls()
             server.login(smtp_user, smtp_password)
             server.send_message(msg)
