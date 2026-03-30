@@ -1,0 +1,31 @@
+# --- React / Frontend ---
+frontend/node_modules/
+frontend/build/
+frontend/.env
+frontend/.env.local
+frontend/.env.development.local
+frontend/.env.test.local
+frontend/.env.production.local
+frontend/npm-debug.log*
+frontend/yarn-debug.log*
+frontend/yarn-error.log*
+
+# --- Python / Backend ---
+backend/venv/
+backend/.env
+backend/__pycache__/
+backend/*.py[cod]
+backend/*$py.class
+backend/.pytest_cache/
+backend/build/
+backend/dist/
+backend/*.egg-info/
+backend/package/
+
+# --- Databases & OS ---
+*.db
+*.sqlite3
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
