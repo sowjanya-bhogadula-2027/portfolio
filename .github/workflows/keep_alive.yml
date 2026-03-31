@@ -1,0 +1,28 @@
+name: Keep Database Awake
+
+on:
+  schedule:
+    # Runs every hour (adjust as needed)
+    - cron: '0 * * * *'
+  workflow_dispatch: # Allows you to run it manually for testing
+
+jobs:
+  ping-db:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.12'
+
+      - name: Install dependencies
+        run: |
+          pip install sqlalchemy asyncpg
+
+      - name: Run Ping Script
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+        run: python backend/ping_db.py
