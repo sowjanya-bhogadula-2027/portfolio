@@ -40,7 +40,7 @@ export const experienceData = [
   {
     id: 1,
     title: "GenAI Engineer",
-    company: "US Bank",
+    company: "Digital Scripts Inc.",
     period: "July 2024 – Present",
     description: "Leading the design and implementation of agentic AI systems for enterprise applications.",
     responsibilities: [
