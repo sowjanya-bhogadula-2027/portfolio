@@ -69,7 +69,7 @@ export const experienceData = [
     id: 3,
     title: "Data Scientist",
     company: "TCS (Tata Consultancy Services)",
-    period: "Jan 2020 – Aug 2022",
+    period: "Aug 2021 – Aug 2022",
     description: "Delivered AI/ML solutions across computer vision, NLP, and recommendation systems.",
     responsibilities: [
       "Developed computer vision models for image recognition and object detection tasks",
